@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itau.api.domain.TaskStatus;
 
 @Entity
@@ -27,12 +28,15 @@ public class Task {
 	TaskStatus status;
 	@Column(name="taskDescription")
 	String taskDescription;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="creationDate")	
 	Date creationDate;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dueDate")	
 	Date dueDate;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="startAlarmDate")	
 	Date startAlarmDate;
@@ -49,7 +53,6 @@ public class Task {
 
 	public Task(int taskId, String userName, TaskStatus status, String taskDescription, Date creationDate, Date dueDate,
 			Date startAlarmDate) {
-		super();
 		this.taskId = taskId;
 		this.userName = userName;
 		this.status = status;

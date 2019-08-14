@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.itau.api.entity.Task;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
-	List<Task> findTasks();
+	public List<Task> findAll();
 
-	List<Task> findByUserName();
+	public List<Task> findByUserName(String userName);
 	
-	Task findByTaskId();
+	public Task findByTaskId(int taskId);
 }
