@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.itau.api.domain.OperationType;
 import com.itau.api.domain.TaskStatus;
 
 @Entity
@@ -22,13 +23,20 @@ public class History {
 	int histId;
 	@Column(name="userName")	
 	String userName;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(length = 16, name="status")	
 	TaskStatus status;
+
+	@Enumerated(EnumType.STRING)
+	@Column(length = 16, name="operationType")	
+	OperationType operationType;
+	
 	@Column(name="taskId")	
 	int taskId;
 	@Column(name="processTime")	
-	Double processTime;	
+	Double processTime;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="creationDate")	
 	Date creationDate;
@@ -37,16 +45,18 @@ public class History {
 		this.histId = 0;
 		this.userName = "";
 		this.status = TaskStatus.EMPTY;		
+		this.operationType = OperationType.EMPTY;		
 		this.taskId = 0;
 		this.processTime = 0.0;
 		this.creationDate = new Date();
 	}
 	
-	public History(int histId, String userName, TaskStatus status, int taskId, Double processTime,
-			Date creationDate) {
+	public History(int histId, String userName, TaskStatus status, OperationType operationType, 
+			int taskId, Double processTime, Date creationDate) {
 		this.histId = histId;
 		this.userName = userName;
 		this.status = status;
+		this.operationType = operationType;
 		this.taskId = taskId;
 		this.processTime = processTime;
 		this.creationDate = creationDate;
@@ -60,6 +70,9 @@ public class History {
 	}
 	public TaskStatus getStatus() {
 		return status;
+	}
+	public OperationType getOperationType() {
+		return operationType;
 	}
 	public int getTaskId() {
 		return taskId;
@@ -80,7 +93,10 @@ public class History {
 	public void setStatus(TaskStatus status) {
 		this.status = status;
 	}
-	public void setRequest(int taskId) {
+	public void setOperationType(OperationType operationType) {
+		this.operationType = operationType;
+	}
+	public void setTaskId(int taskId) {
 		this.taskId = taskId;
 	}
 	public void setProcessTime(Double processTime) {
@@ -99,6 +115,7 @@ public class History {
 		result = prime * result + ((processTime == null) ? 0 : processTime.hashCode());
 		result = prime * result + taskId;
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((operationType == null) ? 0 : operationType.hashCode());
 		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
 		return result;
 	}
@@ -128,6 +145,8 @@ public class History {
 			return false;
 		if (status != other.status)
 			return false;
+		if (operationType != other.operationType)
+			return false;
 		if (userName == null) {
 			if (other.userName != null)
 				return false;
@@ -138,7 +157,7 @@ public class History {
 
 	@Override
 	public String toString() {
-		return "History [histId=" + histId + ", userName=" + userName + ", status=" + status + ", taskId=" + taskId
+		return "History [histId=" + histId + ", userName=" + userName + ", status=" + status  + ", operationType=" + operationType +  ", taskId=" + taskId
 				+ ", processTime=" + processTime + ", creationDate=" + creationDate + "]";
 	}
 

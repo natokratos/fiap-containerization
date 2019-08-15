@@ -7,7 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.itau.api.domain.DomainType;
+import com.itau.api.domain.SeedType;
 
 @Entity
 @Table(name="Seed")
@@ -15,25 +15,25 @@ public class Seed {
 	@Id
 	@Enumerated(EnumType.ORDINAL)
 	@Column(name="seedId")	
-	private DomainType seedId;
+	private SeedType seedId;
 	@Column(name="description")	
 	private String description;
 	@Column(name="value")	
 	private int value;
 
 	public Seed() {
-		this.seedId = DomainType.EMPTY;
+		this.seedId = SeedType.EMPTY;
 		this.description = "";
 		this.value = 0;
 	}
 	
-	public Seed(DomainType seedId, String description, int value) {
+	public Seed(SeedType seedId, String description, int value) {
 		this.seedId = seedId;
 		this.description = description;
 		this.value = value;
 	}
 
-	public DomainType getSeedId() {
+	public SeedType getSeedId() {
 		return seedId;
 	}
 	public String getDescription() {
@@ -43,7 +43,7 @@ public class Seed {
 		return value;
 	}
 	
-	public void setSeedId(DomainType seedId) {
+	public void setSeedId(SeedType seedId) {
 		this.seedId = seedId;
 	}
 	public void setDescription(String description) {

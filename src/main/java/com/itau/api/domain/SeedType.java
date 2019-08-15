@@ -1,6 +1,6 @@
 package com.itau.api.domain;
 
-public enum DomainType {
+public enum SeedType {
 	HISTORY,
 	TASK,
 	EMPTY
