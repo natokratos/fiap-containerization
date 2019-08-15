@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  itau-api-todo:
+    build:
+        context: .
+        dockerfile: Dockerfile 
+    image: itau-api-todo:1.0
+    container_name: itau-api-todo1
+    hostname: itau-api-todo1-docker
+    ports:
+    - "9090:9090"
+    networks:
+    - itau-api-network
+  itau-api-todo2:
+    image: itau-api-todo:1.0
+    container_name: itau-api-todo2
+    hostname: itau-api-todo2-docker
+    ports:
+    - "9070:9090"
+    networks:
+    - itau-api-network
+  itau-api-todo3:
+    image: itau-api-todo:1.0
+    container_name: itau-api-todo3
+    hostname: itau-api-todo3-docker
+    ports:
+    - "9050:9090"
+    networks:
+    - itau-api-network
+  nginxnato-linux:
+    build:
+        context: ./nginx-balancer
+        dockerfile: Dockerfile 
+    image: natokratos/nginxnato-linux:1.0
+    container_name: nginx-balancer
+    hostname: nginx-balancer-docker
+    ports:
+    - "8080:80"
+    - "8081:8080"
+    networks:
+    - itau-api-network    
+networks:
+  itau-api-network:
+    driver: bridge
