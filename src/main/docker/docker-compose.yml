@@ -39,6 +39,15 @@ services:
     - "8080:80"
     - "8081:8080"
     networks:
+    - itau-api-network
+  itau-api-db:
+    image: itau-api-db:1.0
+    container_name: itau-api-db
+    hostname: itau-api-db-docker
+    ports:
+    - "9000:9000"
+    - "9010:9010"
+    networks:
     - itau-api-network    
 networks:
   itau-api-network:
