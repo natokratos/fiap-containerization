@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.itau.api.domain.OperationType;
 import com.itau.api.domain.SeedType;
@@ -150,6 +151,7 @@ public class TaskService {
 		return task; 
 	}
 	
+	@Transactional
 	public void addTask(Task task, Date startDate) {
 		Date endDate = null;
 		
@@ -183,6 +185,7 @@ public class TaskService {
 		}
 	}
 
+	@Transactional
 	public void updateTask(Task task, Date startDate) {
 		Date endDate = null;
 		
@@ -225,7 +228,8 @@ public class TaskService {
 			}
 		}
 	}
-
+	
+	@Transactional
 	public void deleteTask(int taskId, Date startDate) {
 		Date endDate = null;
 		Task taskFound = null;
@@ -274,6 +278,7 @@ public class TaskService {
 		}
 	}
 	
+	@Transactional
 	int getTaskSeed() {
 		Seed seed = null;
 		int nSeed = 0;
@@ -289,7 +294,8 @@ public class TaskService {
 		
 		return nSeed;
 	}
-	
+
+	@Transactional
 	int getHistorySeed() {
 		Seed seed = null;
 		int nSeed = 0;
