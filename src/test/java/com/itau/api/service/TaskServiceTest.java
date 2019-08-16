@@ -45,6 +45,7 @@ public class TaskServiceTest {
 		t.save(new Task(3, "USERX3", TaskStatus.PENDING, "DESC4", new Date(), new Date(), new Date()));
 
 		s.save(new Seed(SeedType.TASK, "TASK", 4));
+		s.save(new Seed(SeedType.HISTORY, "HISTORY", 0));
 	}
 	
 	@Test

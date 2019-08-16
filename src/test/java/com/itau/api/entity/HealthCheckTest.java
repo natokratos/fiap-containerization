@@ -2,13 +2,32 @@ package com.itau.api.entity;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.itau.api.domain.SeedType;
+import com.itau.api.main.ItauApiTodoApplication;
+import com.itau.api.repository.SeedRepository;
+
+@Transactional
 @RunWith(SpringRunner.class)
+@SpringBootTest(classes = ItauApiTodoApplication.class)
 public class HealthCheckTest {
 
+	@Autowired
+	public SeedRepository s;
+	
+	@Before
+	public void setup() {
+		s.save(new Seed(SeedType.TASK, "TASK", 4));
+		s.save(new Seed(SeedType.HISTORY, "HISTORY", 0));
+	}
+	
 	@Test
 	public void testIfCreated() {
 		try {
