@@ -1,6 +1,6 @@
 # ifood-api-order
 
-Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
+Esta API REST armazena e consulta pedidos. Ela possui os seguintes endpoints:
 
 - **GET /ifood/orders/<orderId>**: Retorna o pedido com o id informado na requisição. Exemplo:
 
@@ -35,9 +35,9 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 # Compilar a aplicação
 
-- Via linha de comando, mudar para o diretório itau-api-todo dentro do diretório de códigos-fonte:
+- Via linha de comando, mudar para o diretório fiap-containerization dentro do diretório de códigos-fonte:
   
-	cd $HOME/workspace/ifood-api-order
+	cd $HOME/workspace/fiap-containerization
 
 - Executar o comando abaixo para gerar as classes, executar os testes e gerar o relatório de cobertura:
 
@@ -49,7 +49,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - O relatório estará disponível em:
 
-	$HOME/workspace/ifood-api-order/target/site/jacoco/index.html
+	$HOME/workspace/fiap-containerization/target/site/jacoco/index.html
 
 - Deve ser acessado usando um browser de sua escolha.
 
@@ -64,7 +64,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Via linha de comando, mudar para o diretório:
 
-	cd $HOME/workspace/ifood-api-order/src/main/docker
+	cd $HOME/workspace/fiap-containerization/src/main/docker
 
 - Via linha de comando, executar o comando abaixo:
 
@@ -94,7 +94,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Via linha de comando execute os comandos a seguir:
 
-	cd $HOME/workspace/ifood-api-order/src/main/docker
+	cd $HOME/workspace/fiap-containerization/src/main/docker
 	docker cp ifood-api-order*.jar ifood-api-order:/root/ifood-api-order.jar
 
 - Reinicie o container:
