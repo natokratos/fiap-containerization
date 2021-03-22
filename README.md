@@ -1,39 +1,14 @@
-# itau-api-todo
+# ifood-api-order
 
 Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
-- **GET /todo/tasks**: Retorna todas as tarefas de todos os usuarios. Exemplo:
+- **GET /ifood/orders/<orderId>**: Retorna o pedido com o id informado na requisição. Exemplo:
 
-	curl -X GET http://localhost:8080/todo/tasks
-
-- **GET /todo/tasks/{taskId}**: Retorna a tarefa especificada pelo {taskID}. Exemplo:
-
-	curl -X GET http://localhost:8080/todo/tasks/2
-
-- **GET /todo/tasks/{userName}**: Retorna as tarefas do usuário passando o nome deste em {userName}. Exemplo:
+	curl -X GET http://localhost:9090/ifood/orders/0
 	
-	curl -X GET http://localhost:8080/todo/tasks/Renato
-	
-- **POST /todo/tasks**: Adiciona uma nova tarefa. Exemplo:
+- **POST /ifood/orders**: Adiciona um novo pedido. Exemplo:
 
-	curl -X POST -d "{\"taskId\": 0, \"userName\": \"Renato\", \"status\": \"PENDING\", \"taskDescription\": \"TAREFA TESTE1\", \"dueDate\": \"2019-08-12T00:00:00.000-03:00\"}" -H "Content-Type: application/json" http://localhost:8080/todo/tasks
-
-- **PUT /todo/tasks**: Altera uma tarefa. Exemplo:
-
-	curl -X PUT -d "{\"taskId\": 2, \"userName\": \"Renato\", \"status\": \"COMPLETED\", \"taskDescription\": \"TAREFA ONE\", \"dueDate\": \"2019-08-12T00:00:00.000-03:00\"}" -H "Content-Type: application/json" http://localhost:8080/todo/tasks
-
-- **DELETE /todo/tasks/{taskId}**: Apaga uma tarefa. Exemplo:
-
-	curl -X DELETE http://localhost:8080/todo/tasks/1
-
-- **GET /healthcheck**: Verifica se todos os endpoints estão no ar funcionando corretamente. Exemplo:
-
-	curl -X GET http://localhost:8080/healthcheck
-
-- **GET /metrics**: Retorna um relatório fornecendo dados sobre o **Total de Requisições**, **Requisições por Tipo de Operação**, **Requisções por Usuário** e a **Média de Tempo de Processamento das Requisições**. Exemplo:
-
-	curl -X GET http://localhost:8080/metrics
-
+	curl -X POST -d "{\"order\":{\"userName\": \"Renato\", \"status\": \"APPROVED\", \"paymentType\": \"DEBIT\", \"totalQtty\": \"3\", \"totalValue\": \"56.0\"}, \"orderItem\":[{\"itemDescription\": \"bife parmegiana\", \"itemDescription\": \"bife parmegiana\", \"itemQtty\": \"1\"}, {\"itemDescription\": \"Lasagna\", \"itemQtty\": \"1\"}, {\"itemDescription\": \"peixe\", \"itemQtty\": \"1\"}] }" -H "Content-Type: application/json" http://localhost:9090/ifood/orders
 
 # Pré-requisitos
 
@@ -46,11 +21,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 - Criar um diretório na estação chamado workpsace que conterá os códigos-fonte;
 - Editar o arquivo /etc/hosts e adicionar os seguintes IP's:
 	
-	127.0.0.1		itau-api-todo1
-	127.0.0.1		itau-api-todo2
-	127.0.0.1		itau-api-todo3
-	127.0.0.1		nginx-balancer
-	127.0.0.1		itau-api-db
+	127.0.0.1		ifood-api-order
 	
 # Baixar o código-fonte
 
@@ -58,7 +29,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 	cd $HOME/workspace
 	git init
-	git clone https://github.com/natokratos/itau-api-todo.git
+	git clone https://github.com/natokratos/ifood-api-order.git
 
 - Abrir a IDE de desenvolvimento, importar como projeto Maven existente.
 
@@ -66,13 +37,9 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Via linha de comando, mudar para o diretório itau-api-todo dentro do diretório de códigos-fonte:
   
-	cd $HOME/workspace/itau-api-todo
+	cd $HOME/workspace/ifood-api-order
 
-- Para este projeto, o banco de dados H2 já deve estar no ar para que os testes funcionem. Baixe o projeto **itau-api-db** no GitHub e siga as orientações do respectivo **README.md** para fazer o build e o deploy dele:
-
-	https://github.com/natokratos/itau-api-db.git
-
-- Assim que o banco estiver no ar, via linha de comando executar o comando abaixo para gerar as classes, executar os testes e gerar o relatório de cobertura:
+- Executar o comando abaixo para gerar as classes, executar os testes e gerar o relatório de cobertura:
 
 	mvn clean install  
 
@@ -82,7 +49,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - O relatório estará disponível em:
 
-	$HOME/workspace/itau-api-todo/target/site/jacoco/index.html
+	$HOME/workspace/ifood-api-order/target/site/jacoco/index.html
 
 - Deve ser acessado usando um browser de sua escolha.
 
@@ -97,7 +64,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Via linha de comando, mudar para o diretório:
 
-	cd $HOME/workspace/itau-api-todo/src/main/docker
+	cd $HOME/workspace/ifood-api-order/src/main/docker
 
 - Via linha de comando, executar o comando abaixo:
 
@@ -115,18 +82,7 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Aguarde alguns instantes até que aplicação suba corretamente, via linha de comando verifique da seguinte forma:
 
-	docker logs itau-api-todo1
-	docker logs itau-api-todo2
-	docker logs itau-api-todo3
-
-- O procedimento atual visa que a aplicação tenha alta disponibilidade, subindo um container balanceador (**nginx-balancer**) para fazer o balanceamento entre 3 containers de aplicação (**itau-api-todo1**, **itau-api-todo2**, **itau-api-todo3**) e um banco de dados centralizado para todos eles (**itau-api-db**);
-
-
-- A quantidade de containers da aplicação pode ser modificada no arquivo **nginx.conf** na seção ** upstream app_servers**, localizado em:
-
-	$HOME/workspace/itau-api-todo/src/main/docker/nginx-balancer/nginx.conf
-
-- Após modificá-lo, basta executar este procedimento novamente para que a imagem local do balanceador (**nginx-balancer**) seja modificada com o novo arquivo.
+	docker logs ifood-api-order
 
 # Atualizar a Aplicação no Docker
 
@@ -134,36 +90,22 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 - Para atualizar a aplicação no docker, primeiro pare o primeiro container:
 
-	docker stop itau-api-todo1
+	docker stop ifood-api-order
 
 - Via linha de comando execute os comandos a seguir:
 
-	cd $HOME/workspace/itau-api-todo/src/main/docker
-	docker cp itau-api-todo*.jar itau-api-todo1:/root/itau-api-todo.jar
+	cd $HOME/workspace/ifood-api-order/src/main/docker
+	docker cp ifood-api-order*.jar ifood-api-order:/root/ifood-api-order.jar
 
 - Reinicie o container:
 	
-	docker start itau-api-todo1
+	docker start ifood-api-order
 
 - Teste se a aplicação subiu corretamente:
 
-	curl -X GET http://localhost:8080/healthcheck
-
-- Caso esteja funcionando, pare os outros dois containers:
-
-	docker stop itau-api-todo2
-	docker stop itau-api-todo3
-
-- Via linha de comando execute os comandos a seguir:
-
-	cd $HOME/workspace/itau-api-todo/src/main/docker
-	docker cp itau-api-todo*.jar itau-api-todo2:/root/itau-api-todo.jar
-	docker cp itau-api-todo*.jar itau-api-todo3:/root/itau-api-todo.jar
+	curl -X POST -d "{\"order\":{\"userName\": \"Renato\", \"status\": \"APPROVED\", \"paymentType\": \"DEBIT\", \"totalQtty\": \"3\", \"totalValue\": \"56.0\"}, \"orderItem\":[{\"itemDescription\": \"bife parmegiana\", \"itemDescription\": \"bife parmegiana\", \"itemQtty\": \"1\"}, {\"itemDescription\": \"Lasagna\", \"itemQtty\": \"1\"}, {\"itemDescription\": \"peixe\", \"itemQtty\": \"1\"}] }" -H "Content-Type: application/json" http://localhost:9090/ifood/orders
 	
-- Reinicie os containers:
-	
-	docker start itau-api-todo2
-	docker start itau-api-todo3
+	curl -X GET http://localhost:9090/ifood/orders/0
 
 # Banco em memória
 
@@ -172,16 +114,10 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 - Para acessar o H2 (banco em memória) local use o seguinte endereço:
 
 	http://localhost:9090/h2
-    
-- Caso tenha subido no docker, basta mudar as portas para ver os bancos de cada aplicação no ar:
-
-	http://localhost:9050/h2
-	http://localhost:9070/h2
-	http://localhost:9090/h2
 
 - Coloque no campo JDBC_URL o valor:
 
-	jdbc:h2:tcp://itau-api-db:9000/mem:itaudb
+	jdbc:h2:mem:ifoodOrderDb
   
 - Coloque no campo Username o valor:
 
@@ -197,15 +133,4 @@ Esta API REST armazena e atualiza tarefas. Ela possui os seguintes endpoints:
 
 	$HOME/logs 
 
-# Melhorias
-
-Identificamos até o momento as seguintes melhorias
-
-- Inserir segurança via spring-security (OAuth2);
-- Persistir em disco os dados do banco H2 interno;
-- Usar o banco H2 apenas em desenvolvimento, criar novos perfis apontando para os bancos dos outros ambientes no momento do deploy;
-- Definir e inserir mais estastísticas em /metrics, como por exemplo totais por data;
-- Aumentar a cobertura de código dos testes, olhando para o relatório do Jacoco;
-- A quantidade de containers de aplicação hoje está definida dentro do arquivo do docker-compose e da configuração do balanceador. Devemos usar o docker no modo swarm, cloud pública e/ou uma ferramenta como Kubernetes para escalar os containers horizontalmente de forma mais simples e parametrizada;
-- Usar processos e ferramentas para CI/CD, como o GitLab CI/CD, Jenkins e SonarQube para agilizar o desenvolvimento e a identificação e correção de erros antes que cheguem nos ambientes produtivos.
  

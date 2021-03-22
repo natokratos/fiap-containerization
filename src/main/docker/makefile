@@ -1,5 +1,5 @@
 build:
-	@docker-compose -p itau-api-todo build --force-rm
+	@docker-compose -p ifood-api-order build --force-rm
 
 run:
 	@docker-compose up -d

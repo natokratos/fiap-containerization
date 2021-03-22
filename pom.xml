@@ -8,10 +8,10 @@
 		<version>2.1.7.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.intelipost</groupId>
-	<artifactId>itau-api-todo</artifactId>
+	<groupId>com.fiap</groupId>
+	<artifactId>ifood-api-order</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>itau-api-todo</name>
+	<name>ifood-api</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

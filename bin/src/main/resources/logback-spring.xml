@@ -36,12 +36,12 @@
         <appender-ref ref="Console" />
     </root>
  
-    <logger name="com.itau.api.controller" level="trace" additivity="false">
+    <logger name="com.fiap.api.controller" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
     
-    <logger name="com.itau.api.service" level="trace" additivity="false">
+    <logger name="com.fiap.api.service" level="trace" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger> 
